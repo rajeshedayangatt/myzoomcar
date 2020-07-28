@@ -17,6 +17,7 @@ function SideBarAdmin() {
 
             <li className="nav-item">     <Link className="nav-link" to="/admin/brand/create">Create Brand</Link> </li>
             <li className="nav-item">     <Link className="nav-link" to="/admin/brand/manage">Manage Brands</Link> </li>
+            <li className="nav-item">     <Link className="nav-link" to="/admin/vehicle/create">Post a vehicle</Link> </li>
 
         </ul>
     )
