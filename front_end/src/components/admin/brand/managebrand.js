@@ -9,15 +9,22 @@ class ManageBrand extends React.Component {
     constructor(props) {
         super(props);
         this.removeBrand = this.removeBrand.bind(this)
-
+        this.state = {
+            brand_content_list : []
+        };
+            
+        
     }
 
-    componentDidMount() {
-        console.log(this.props.listbrand.length)
-        this.props.loadBrands().then(() => {
-            console.log("listbrand:",this.props.listbrand[0])
+    componentWillMount() {
 
+        this.props.loadBrands().then(() => {
+            this.setState({
+                brand_content_list : this.props.listbrand
+            });
         });
+
+        // this.props.listbrand[0]
     }
 
     removeBrand(id) {
@@ -25,21 +32,26 @@ class ManageBrand extends React.Component {
         if(confirm) {
             axios.get("http://127.0.0.1:8000/api/brand/remove/"+id).then((res) => {
                 alert("successfully updated")
-                console.log("props",this.props)
+                console.log("props",this.props);
+                this.props.loadBrands().then(() => {
+                    console.log(" this.props.listbrand", this.props.listbrand);
+                    this.setState({
+                        brand_content_list : this.props.listbrand
+                    });
+                });
             })
         }
     }
 
     render() {
 
-        console.log(this.props.listbrand)
         return (
             <div>
                 <h3>Manage Brand</h3>
                 <hr />
                 <div >
                     {
-                        (this.props.listbrand.length > 0) ? (
+                        (this.state.brand_content_list.length > 0) ? (
                             <table className="table">
                                 <thead>
                                     <tr>
@@ -52,14 +64,14 @@ class ManageBrand extends React.Component {
                                 <tbody>
                                     {
                                         
-                                        this.props.listbrand[0].map( el => (
+                                        this.state.brand_content_list.map( el => (
                                             <tr key={el.id}>
                                                 <td>{el.BrandName}</td>
                                                 <td>{el.CreationDate}</td>
                                                 <td>{el.UpdationDate}</td>
                                                 <td>
                                                     <Link to={`/admin/brand/manage/edit/${el.id}`}>update</Link>
-                                                    <a href="#" onClick={
+                                                    <a className="ml-2" href="#" onClick={
                                                         () => this.removeBrand(el.id)
                                                         }>Delete</a>
                                                 </td>

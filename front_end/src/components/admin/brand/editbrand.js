@@ -3,6 +3,8 @@ import { connect } from "react-redux"
 import {updateBrand} from "../../../redux/action/admin/brand/action";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { Redirect } from 'react-router'
+import { withRouter } from "react-router";
 
 
 const EditBrand = (props) => {
@@ -13,7 +15,7 @@ const EditBrand = (props) => {
     const [brandName,setBrandName] = useState("");
 
     function submit(){
-        props.updatebrand({ name : brandName , id : id})
+        props.updatebrand({ name : brandName , id : id});
     }
 
     function changeName(e) {
@@ -27,25 +29,29 @@ const EditBrand = (props) => {
         });
     },[]);
 
-    return (
-        <div>
-            <h3>Edit Brand {id}</h3>
-            <hr />
-            <div >
-                <div className="form-group">
-                    <label for="exampleInputEmail1">Brand Name</label>
-                    <input type="text" className="form-control" placeholder="Enter brand name" onChange={changeName} value={brandName} />
+
+        return (
+            <div>
+                <h3>Edit Brand {id}</h3>
+                <hr />
+                <div >
+                    <div className="form-group">
+                        <label for="exampleInputEmail1">Brand Name</label>
+                        <input type="text" className="form-control" placeholder="Enter brand name" onChange={changeName} value={brandName} />
+                    </div>
+                    <button type="submit" onClick={submit} className="btn btn-primary">Submit</button>
                 </div>
-                <button type="submit" onClick={submit} className="btn btn-primary">Submit</button>
             </div>
-        </div>
-    );
+        );
+
+    
+
 };
 
-const mapDispatchToProps  = dispatch => {
+const mapDispatchToProps  = (dispatch,ownProps) => {
 
     return {
-        updatebrand : (data) => dispatch(updateBrand(data))
+        updatebrand : (data) => dispatch(updateBrand(data,ownProps))
     }
 }
 
@@ -57,4 +63,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect(mapStateToProps,mapDispatchToProps)(EditBrand);
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(EditBrand));
