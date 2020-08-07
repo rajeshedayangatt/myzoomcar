@@ -14,6 +14,19 @@ class ListVehicles extends React.Component {
         }
     }
 
+
+    
+    componentWillMount() {
+
+        this.props.loadBrands().then(() => {
+            this.setState({
+                vehicle_list : this.props.listvehicle
+            });
+        });
+
+        // this.props.listbrand[0]
+    }
+
     render() {
 
         return (
@@ -39,11 +52,13 @@ class ListVehicles extends React.Component {
                                         
                                         this.state.vehicle_list.map( el => (
                                             <tr key={el.id}>
+                                                <td>{el.VehiclesTitle}</td>
                                                 <td>{el.BrandName}</td>
-                                                <td>{el.CreationDate}</td>
-                                                <td>{el.UpdationDate}</td>
+                                                <td>{el.PricePerDay}</td>
+                                                <td>{el.FuelType}</td>
+                                                <td>{el.ModelYear}</td>
                                                 <td>
-                                                    <Link to={`/admin/brand/manage/edit/${el.id}`}>update</Link>
+                                                    <Link to={`/admin/vehicle/manage/edit/${el.id}`}>update</Link>
                                                     <a className="ml-2" href="#" onClick={
                                                         () => this.removeBrand(el.id)
                                                         }>Delete</a>
@@ -69,5 +84,19 @@ class ListVehicles extends React.Component {
 
 }
 
+const mapDispatchToProps  = dispatch => {
 
-export default ListVehicles;
+    return {
+        loadBrands : () => dispatch(getVehicle())
+    }
+}
+
+
+const mapStateToProps = state => {
+    const vehicle = state.vehicle;
+    return {
+        listvehicle : vehicle.vehicle
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(ListVehicles);

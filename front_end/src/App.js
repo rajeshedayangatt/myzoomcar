@@ -23,6 +23,7 @@ import ManageBrand from './components/admin/brand/managebrand';
 import EditBrand from './components/admin/brand/editbrand';
 import AddVehicle from './components/admin/vehicle/addvehicle';
 import ListVehicle from './components/admin/vehicle/managevehicle';
+import UpdateVehicle from './components/admin/vehicle/updateVehicle';
 
 
 
@@ -109,7 +110,21 @@ function App() {
 
 {/* Vehicle add Route ends */}    
 
+{/* Vehicle edit Route start */}    
 
+<Route path="/admin/vehicle/manage/edit/:id">
+              <div className="row">
+                  <div className="col-md-3">
+                    <SideBarAdmin />
+                  </div>
+
+                  <div className="col-md-9">
+                    <UpdateVehicle />
+                  </div>
+              </div>
+            </Route>
+
+{/* Vehicle  edit Route ends */}    
 
 {/* Vehicle list Route start */}    
 
@@ -126,6 +141,10 @@ function App() {
             </Route>
 
 {/* Vehicle  list Route ends */}    
+
+
+
+
 
             <Route path="/admin">
               <div className="row">

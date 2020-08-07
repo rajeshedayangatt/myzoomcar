@@ -20,7 +20,7 @@ Route::post('/brand/update','BrandController@update');
 Route::get('/brand/remove/{brandid}','BrandController@delete');
 
 Route::post('/vehicle/save','VehicleController@store');
-Route::post('/vehicle/list','VehicleController@list');
+Route::get('/vehicle/list','VehicleController@list');
 
 
 

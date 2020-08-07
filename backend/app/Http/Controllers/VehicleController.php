@@ -14,7 +14,9 @@ class VehicleController extends Controller
 
     public function list() {
 
-        $vehicle = Vehicle::get();
+        $vehicle = Vehicle::leftJoin('tblbrands', function($join) {
+                $join->on('tblvehicles.VehiclesBrand', '=', 'tblbrands.id');
+          })->get();
 
         return $vehicle;
     }
