@@ -19,6 +19,11 @@ Route::post('/brand/save','BrandController@store');
 Route::post('/brand/update','BrandController@update');
 Route::get('/brand/remove/{brandid}','BrandController@delete');
 
+Route::post('/vehicle/save','VehicleController@store');
+Route::post('/vehicle/list','VehicleController@list');
+
+
+
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
