@@ -24,6 +24,7 @@ import EditBrand from './components/admin/brand/editbrand';
 import AddVehicle from './components/admin/vehicle/addvehicle';
 import ListVehicle from './components/admin/vehicle/managevehicle';
 import UpdateVehicle from './components/admin/vehicle/updateVehicle';
+import BookingList from './components/admin/booking/list';
 
 
 
@@ -142,6 +143,19 @@ function App() {
 
 {/* Vehicle  list Route ends */}    
 
+{/* booking manage Route start */}    
+      <Route path="/admin/booking/manage">
+          <div className="row">
+              <div className="col-md-3">
+                <SideBarAdmin />
+              </div>
+              <div className="col-md-9">
+                <BookingList />
+              </div>
+          </div>
+        </Route>
+
+{/*  booking manage Route end */}    
 
 
 

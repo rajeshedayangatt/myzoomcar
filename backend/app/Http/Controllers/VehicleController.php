@@ -6,24 +6,41 @@ use Illuminate\Http\Request;
 
 use App\Vehicle;
 use App\Traits\UploadTrait;
-
+use DB;
 
 class VehicleController extends Controller
 {
     use UploadTrait;
 
-    public function list() {
+    public function lists() {
 
-        $vehicle = Vehicle::leftJoin('tblbrands', function($join) {
-                $join->on('tblvehicles.VehiclesBrand', '=', 'tblbrands.id');
+        $vehicle = Vehicle::select(
+            DB::raw('tblvehicles.*,tb.BrandName')
+            )->leftJoin('tblbrands as tb', function($join) {
+                $join->on('tblvehicles.VehiclesBrand', '=', 'tb.id');
           })->get();
 
         return $vehicle;
     }
 
+    public function list($vehicle_id) {
+        $vehicle = Vehicle::where('id',$vehicle_id)->first();
+        return $vehicle;
+    }
+
     public function store(Request $request){
 
-        $vehicle = new Vehicle;
+        if($request->vehicleid == "") {
+            $vehicle = new Vehicle;
+        }else{
+
+            $this->updateVehicleAccessories($request->vehicleid);
+            $vehicle = Vehicle::firstOrNew(array('id' => $request->vehicleid));
+        }
+
+
+        // $vehicle = Vehicle::where('id',"2")->first();
+
         $vehicle->VehiclesTitle = $request->vTitle;
         $vehicle->VehiclesBrand = $request->vBrand;
         $vehicle->VehiclesOverview = $request->vOverview;
@@ -149,8 +166,6 @@ class VehicleController extends Controller
                         $vehicle->CrashSensor = 1;
                     }elseif($val == "leather_seats"){
                         $vehicle->LeatherSeats = 1;
-                    }elseif($val == "reg_date"){
-                        $vehicle->RegDate = 1;
                     }
 
                 }
@@ -166,8 +181,29 @@ class VehicleController extends Controller
     }
 
 
-    private function imageFileSave() {
+    private function updateVehicleAccessories($id) {
 
+        $vehicle = Vehicle::firstOrNew(array('id' => $id));
+        $vehicle->AirConditioner = 0;
+        $vehicle->PowerDoorLocks = 0;
+        $vehicle->AntiLockBrakingSystem = 0;
+        $vehicle->BrakeAssist = 0;
+        $vehicle->PowerSteering = 0;
+        $vehicle->DriverAirbag = 0;
+        $vehicle->PassengerAirbag = 0;
+        $vehicle->CDPlayer = 0;
+        $vehicle->CentralLocking = 0;
+        $vehicle->CrashSensor = 0;
+        $vehicle->LeatherSeats = 0;
+        $vehicle->save();
+
+    }
+
+    public function delete($vehicleid){
+        $vehicle = Vehicle::where("id",$vehicleid)->first();
+        $vehicle->delete();
+        $vehicle = Vehicle::get();
+        return $vehicle;
 
     }
 }

@@ -55,6 +55,7 @@ const AddVehicle = (props) => {
         formData.set("vModelYear", vModelYear);
         formData.set("vSeatingCapacity", vSeatingCapacity);
         formData.set("vAccessories", vAccessories);
+        formData.set("vehicleid", "");
 
         formData.append("vImage1", vImage1);
         formData.append("vImage2", vImage2);

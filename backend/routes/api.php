@@ -20,8 +20,11 @@ Route::post('/brand/update','BrandController@update');
 Route::get('/brand/remove/{brandid}','BrandController@delete');
 
 Route::post('/vehicle/save','VehicleController@store');
-Route::get('/vehicle/list','VehicleController@list');
+Route::get('/vehicle/list','VehicleController@lists');
+Route::get('/vehicle/list/{vehicleid}','VehicleController@list');
+Route::get('/vehicle/remove/{brandid}','VehicleController@delete');
 
+Route::get('/booking/lists','BookingController@lists');
 
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {

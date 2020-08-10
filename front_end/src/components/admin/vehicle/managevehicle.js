@@ -18,13 +18,27 @@ class ListVehicles extends React.Component {
     
     componentWillMount() {
 
-        this.props.loadBrands().then(() => {
+        this.props.loadVehicles().then(() => {
             this.setState({
                 vehicle_list : this.props.listvehicle
             });
         });
 
         // this.props.listbrand[0]
+    }
+
+    removeVehicle(id) {
+        var confirm = window.confirm("Are you sure wanted to delete?");
+        if(confirm) {
+            axios.get("http://127.0.0.1:8000/api/vehicle/remove/"+id).then((res) => {
+                alert("successfully updated")
+                this.props.loadVehicles().then(() => {
+                    this.setState({
+                        vehicle_list : this.props.listvehicle
+                    });
+                });
+            })
+        }
     }
 
     render() {
@@ -60,7 +74,7 @@ class ListVehicles extends React.Component {
                                                 <td>
                                                     <Link to={`/admin/vehicle/manage/edit/${el.id}`}>update</Link>
                                                     <a className="ml-2" href="#" onClick={
-                                                        () => this.removeBrand(el.id)
+                                                        () => this.removeVehicle(el.id)
                                                         }>Delete</a>
                                                 </td>
                                             </tr>
@@ -87,7 +101,7 @@ class ListVehicles extends React.Component {
 const mapDispatchToProps  = dispatch => {
 
     return {
-        loadBrands : () => dispatch(getVehicle())
+        loadVehicles : () => dispatch(getVehicle())
     }
 }
 
