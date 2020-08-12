@@ -1,24 +1,41 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getBookingList } from "../../../redux/action/admin/booking/action"
+import { getBookingList , confirmBooking , cancelBooking} from "../../../redux/action/admin/booking/action"
 import { Link } from "react-router-dom";
 import '../../../components/common.css'
 
 class BookingList extends React.Component {
 
     constructor(props) {
-        super(props);
-        this.state = {
-            bookings : []
-        }       
+        super(props);    
     }
 
     componentDidMount() {
-        this.props.getBooking().then(() => {
-            this.setState({
-                bookings : this.props.bookings
+        this.props.getBooking();
+    }
+
+
+    confirmBooking(bookingid){
+
+        var confirm = window.confirm("Do you really want to Confirm this booking");
+        if(confirm) {
+            this.props.confirmBooking(bookingid).then(() => {
+                alert("Successfully Updated");
             });
-        });
+
+        }
+
+    }
+
+
+    cancelBooking(bookingid){
+        var confirm = window.confirm("Do you really want to Cancel this booking");
+        if(confirm) {
+            this.props.cancelBooking(bookingid).then(() => {
+                alert("Successfully Updated");
+            });
+        }
+
     }
 
     render(){
@@ -28,7 +45,7 @@ class BookingList extends React.Component {
                 <h3>Manage Bookings</h3>
                 <div className="table-responsive" >
                     {
-                        (this.state.bookings.length > 0) ? (
+                        (this.props.bookings.length > 0) ? (
                             <table className="table " id="booking_tbl">
                                 <thead>
                                     <tr>
@@ -46,14 +63,14 @@ class BookingList extends React.Component {
                                 <tbody>
                                     {
 
-                                        this.state.bookings.map( (el,index) => (
+                                        this.props.bookings.map( (el,index) => (
                                             <tr key={el.id}>
                                                 <td>{index+1}</td>
                                                 <td>{el.FullName}</td>
                                                 <td>{el.VehiclesTitle}</td>
                                                 <td>{el.FromDate}</td>
                                                 <td>{el.ToDate}</td>
-                                                <td className="text-nowrap">{el.message}</td>
+                                                <td >{el.message}</td>
                                                 <td>{
                                                 
                                                  (() => {
@@ -61,11 +78,11 @@ class BookingList extends React.Component {
                                                      console.log("status",el)
                                                      
                                                      if(el.Status == 0) {
-                                                        return <span>Not Confirmed yet</span>
+                                                        return <span className="text-info">Not Confirmed yet</span>
                                                      }else if(el.Status == 1) {
-                                                        return <span>Confirme</span>
+                                                        return <span className="text-success">Confirmed</span>
                                                      }else if(el.Status == 2) {
-                                                        return <span>Cancelled</span>
+                                                        return <span className="text-danger">Cancelled</span>
                                                      }
                                                  })()
                                                 }</td>
@@ -73,11 +90,11 @@ class BookingList extends React.Component {
                                                 <td>{el.PostingDate}</td>
                                                 <td>
                                                     <a className="ml-2" href="#" onClick={
-                                                        () => this.removeBrand(el.id)
-                                                        }>Confirme</a>
+                                                        () => this.confirmBooking(el.id)
+                                                        }>Confirm</a>
 
                                                     <a className="ml-2" href="#" onClick={
-                                                        () => this.removeBrand(el.id)
+                                                        () => this.cancelBooking(el.id)
                                                         }>Cancel</a>
                                                 </td>
                                             </tr>
@@ -110,7 +127,9 @@ const mapStateToProps = (state) => {
 
 const dispatchStateToProps = (dispatch) => {
     return {
-        getBooking : () => dispatch(getBookingList())
+        getBooking : () => dispatch(getBookingList()),
+        confirmBooking : (bookingid) => dispatch(confirmBooking(bookingid)),
+        cancelBooking : (bookingid) => dispatch(cancelBooking(bookingid)),
     }
 }
 

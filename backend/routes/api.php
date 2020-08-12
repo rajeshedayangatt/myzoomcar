@@ -25,6 +25,20 @@ Route::get('/vehicle/list/{vehicleid}','VehicleController@list');
 Route::get('/vehicle/remove/{brandid}','VehicleController@delete');
 
 Route::get('/booking/lists','BookingController@lists');
+Route::get('/booking/confirm/{bookingid}','BookingController@confirm');
+Route::get('/booking/cancel/{bookingid}','BookingController@cancel');
+
+
+Route::get('/testimonial/lists','TestimonialController@lists');
+Route::get('/testimonial/active/{id}','TestimonialController@statusupdateActive');
+Route::get('/testimonial/inactive/{id}','TestimonialController@statusupdateInactive');
+
+
+Route::get('/contactus/lists','ContactusController@lists');
+Route::get('/contactus/read/{id}','ContactusController@contactStatusUpdate');
+
+Route::get('/regusers/lists','RegusersController@lists');
+
 
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {

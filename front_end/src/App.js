@@ -25,6 +25,10 @@ import AddVehicle from './components/admin/vehicle/addvehicle';
 import ListVehicle from './components/admin/vehicle/managevehicle';
 import UpdateVehicle from './components/admin/vehicle/updateVehicle';
 import BookingList from './components/admin/booking/list';
+import TestimonialList from './components/admin/testimonials/list';
+import ContactUs from './components/admin/contactus/list';
+import RegUsers from './components/admin/regusers/list';
+import PagesForm from './components/admin/pages/list';
 
 
 
@@ -157,7 +161,64 @@ function App() {
 
 {/*  booking manage Route end */}    
 
+{/* Testimonials manage Route start */}    
+<Route path="/admin/testimonials/manage">
+          <div className="row">
+              <div className="col-md-3">
+                <SideBarAdmin />
+              </div>
+              <div className="col-md-9">
+                <TestimonialList />
+              </div>
+          </div>
+        </Route>
 
+{/*  Testimonials manage Route end */}    
+
+
+{/* Contact manage Route start */}    
+<Route path="/admin/contact/manage">
+          <div className="row">
+              <div className="col-md-3">
+                <SideBarAdmin />
+              </div>
+              <div className="col-md-9">
+                <ContactUs />
+              </div>
+          </div>
+        </Route>
+
+{/*  Contact manage Route end */}    
+
+
+
+{/* Reg users manage Route start */}    
+<Route path="/admin/regusers/manage">
+          <div className="row">
+              <div className="col-md-3">
+                <SideBarAdmin />
+              </div>
+              <div className="col-md-9">
+                <RegUsers />
+              </div>
+          </div>
+        </Route>
+
+{/*   Reg users manage Route end */}  
+
+{/* Reg users manage Route start */}    
+<Route path="/admin/pages/manage">
+          <div className="row">
+              <div className="col-md-3">
+                <SideBarAdmin />
+              </div>
+              <div className="col-md-9">
+                <PagesForm />
+              </div>
+          </div>
+        </Route>
+
+{/*   Reg users manage Route end */}    
 
 
             <Route path="/admin">

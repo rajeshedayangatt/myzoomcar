@@ -12,3 +12,27 @@ export const getBookingList = () => {
                         });
         }
 }
+
+
+
+export const confirmBooking = (bookingid) => {
+
+    return (dispatch) => {
+        return axios.get("http://127.0.0.1:8000/api/booking/confirm/"+bookingid)
+                       .then(res => {
+                           dispatch({ type: GET_BOOKINGS, payload:  res.data });
+                       });
+    }
+}
+
+
+
+export const cancelBooking = (bookingid) => {
+
+    return (dispatch) => {
+        return axios.get("http://127.0.0.1:8000/api/booking/cancel/"+bookingid)
+                       .then(res => {
+                           dispatch({ type: GET_BOOKINGS, payload:  res.data });
+                       });
+    }
+}

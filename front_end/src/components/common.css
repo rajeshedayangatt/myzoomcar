@@ -8,3 +8,6 @@
     padding: 10px;
 }
 
+#booking_tbl th , #booking_tbl td {
+    padding: 5px;
+}

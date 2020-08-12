@@ -20,6 +20,10 @@ function SideBarAdmin() {
             <li className="nav-item">     <Link className="nav-link" to="/admin/vehicle/create">Post a vehicle</Link> </li>
             <li className="nav-item">     <Link className="nav-link" to="/admin/vehicle/manage">Manage Vehicles</Link> </li>
             <li className="nav-item">     <Link className="nav-link" to="/admin/booking/manage">Manage Bookings</Link> </li>
+            <li className="nav-item">     <Link className="nav-link" to="/admin/testimonials/manage">Manage Testimonials</Link> </li>
+            <li className="nav-item">     <Link className="nav-link" to="/admin/contact/manage">Manage Conatctus Query</Link> </li>
+            <li className="nav-item">     <Link className="nav-link" to="/admin/regusers/manage">Reg Users</Link> </li>
+            <li className="nav-item">     <Link className="nav-link" to="/admin/pages/manage">Manage Pages</Link> </li>
 
         </ul>
     )
