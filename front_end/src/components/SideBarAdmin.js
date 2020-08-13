@@ -24,6 +24,7 @@ function SideBarAdmin() {
             <li className="nav-item">     <Link className="nav-link" to="/admin/contact/manage">Manage Conatctus Query</Link> </li>
             <li className="nav-item">     <Link className="nav-link" to="/admin/regusers/manage">Reg Users</Link> </li>
             <li className="nav-item">     <Link className="nav-link" to="/admin/pages/manage">Manage Pages</Link> </li>
+            <li className="nav-item">     <Link className="nav-link" to="/admin/contactinfo">Update Contact Info</Link> </li>
 
         </ul>
     )

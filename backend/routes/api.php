@@ -40,6 +40,13 @@ Route::get('/contactus/read/{id}','ContactusController@contactStatusUpdate');
 Route::get('/regusers/lists','RegusersController@lists');
 
 
+Route::get('/page/{id}','PageController@getpage');
+Route::post('/page/save','PageController@savePage');
+
+
+
+Route::get('/contact/info','ContactController@info');
+Route::post('/contact/update','ContactController@update');
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();

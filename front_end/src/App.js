@@ -29,6 +29,7 @@ import TestimonialList from './components/admin/testimonials/list';
 import ContactUs from './components/admin/contactus/list';
 import RegUsers from './components/admin/regusers/list';
 import PagesForm from './components/admin/pages/list';
+import Contactinfo from './components/admin/contactinfo';
 
 
 
@@ -220,6 +221,19 @@ function App() {
 
 {/*   Reg users manage Route end */}    
 
+{/* Reg users manage Route start */}    
+<Route path="/admin/contactinfo">
+          <div className="row">
+              <div className="col-md-3">
+                <SideBarAdmin />
+              </div>
+              <div className="col-md-9">
+                <Contactinfo />
+              </div>
+          </div>
+        </Route>
+
+{/*   Reg users manage Route end */}    
 
             <Route path="/admin">
               <div className="row">

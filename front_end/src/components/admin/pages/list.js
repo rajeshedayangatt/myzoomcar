@@ -1,7 +1,84 @@
 import React from "react";
 import { Editor } from '@tinymce/tinymce-react';
+import axios from "axios";
 
 class PagesForm extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            selected_id : '',
+            selected_page : '',
+            page_content : ''
+        };
+        this.handleEditorChange = this.handleEditorChange.bind(this);
+        this.submitForm = this.submitForm.bind(this);
+        this.contentChange = this.contentChange.bind(this);
+    }
+
+    handleEditorChange(el) {
+
+        this.setState({
+            page_content : el
+        })
+
+    }
+
+    contentChange(el) {
+        this.setState({
+            selected_id : '',
+            selected_page: '',
+            page_content : ''
+        });
+       let id = el.target.value;
+        axios.get("http://127.0.0.1:8000/api/page/"+id).then((res) => {
+
+                let data = res.data;
+                console.log(data)
+                this.setState({
+                    selected_id : data.id,
+                    selected_page: data.PageName,
+                    page_content : data.detail
+                })
+        });
+
+    
+    }
+
+    submitForm()  {
+
+        let formdata = {
+            selected_page : this.state.selected_id,
+            slected_page_content : this.state.page_content
+        }
+
+        this.setState({
+            selected_id : '',
+            selected_page: '',
+            page_content : ''
+        })
+
+        axios({
+            method: 'post',
+            url: 'http://127.0.0.1:8000/api/page/save',
+            data: formdata,
+            // headers: {'Content-Type': 'multipart/form-data' }
+            })
+            .then( (response) => {
+                let data = response.data;
+                this.setState({
+                    selected_id : data.id,
+                    selected_page: data.PageName,
+                    page_content : data.detail
+                })
+            })
+            .catch(function (response) {
+                //handle error
+                console.log(response);
+            });
+
+
+    }
 
     render() {
         return(
@@ -13,57 +90,77 @@ class PagesForm extends React.Component {
                 </div>
                 <div className="card-body">
                     <div className="row">
-                        <div className="col-md-6">
+                        <div className="col-md-3">
                             <label>Select Pages</label>
                         </div>
 
-                        <div className="col-md-6">
-                            <select className="form-control">
+                        <div className="col-md-9">
+                            <select className="form-control" onChange={this.contentChange}>
                                 <option value="">Select One</option>
-                                <option value="">Terms and conditions</option>
-                                <option value="">Privacy and policy</option>
-                                <option value="">About us</option>
-                                <option value="">Faq</option>
+                                <option value="1">Terms and conditions</option>
+                                <option value="2">Privacy and policy</option>
+                                <option value="3">About us</option>
+                                <option value="11">Faq</option>
                             </select>
                         </div>
                     </div>
 
 
-                    <div className="row">
-                        <div className="col-md-6">
-                            <label>Selected page</label>
+                    <div className="row  mt-2">
+                        <div className="col-md-3">
+                            <label>Selected Page</label>
                         </div>
 
-                        <div className="col-md-6">
-                             <label>Terms and conditions</label>
+                        <div className="col-md-9">
+                             <label>{this.state.selected_page}</label>
                         </div>
                     </div>
 
 
-                    <div className="row">
-                        <div className="col-md-6">
+                    <div className="row mt-2">
+                        <div className="col-md-3">
                             <label>Page Details</label>
                         </div>
 
-                        <div className="col-md-6">
-                            <Editor
-                                initialValue="<P align=justify><FONT size=2><STRONG><FONT color=#990000>(1) ACCEPTANCE OF TERMS</FONT><BR><BR></STRONG>Welcome to Yahoo! India. 1Yahoo Web Services India Private Limited Yahoo, we or us as the case may be) provides the Service (defined below) to you, subject to the following Terms of Service (TOS), which may be updated by us from time to time without notice to you. You can review the most current version of the TOS at any time at: <A href='http://in.docs.yahoo.com/info/terms/'>http://in.docs.yahoo.com/info/terms/</A>. In addition, when using particular Yahoo services or third party services, you and Yahoo shall be subject to any posted guidelines or rules applicable to such services which may be posted from time to time. All such guidelines or rules, which maybe subject to change, are hereby incorporated by reference into the TOS. In most cases the guides and rules are specific to a particular part of the Service and will assist you in applying the TOS to that part, but to the extent of any inconsistency between the TOS and any guide or rule, the TOS will prevail. We may also offer other services from time to time that are governed by different Terms of Services, in which case the TOS do not apply to such other services if and to the extent expressly excluded by such different Terms of Services. Yahoo also may offer other services from time to time that are governed by different Terms of Services. These TOS do not apply to such other services that are governed by different Terms of Service. </FONT></P><P align=justify><FONT size=2>Welcome to Yahoo! India. Yahoo Web Services India Private Limited Yahoo
-                                , we or us as the case may be) provides the Service (defined below) to you, subject to the following Terms of Service (TOS), which may be updated by us from time to time without notice to you. You can review the most current version of the TOS at any time at: </FONT><A href='http://in.docs.yahoo.com/info/terms/'><FONT size=2>http://in.docs.yahoo.com/info/terms/</FONT></A><FONT size=2>. In addition, when using particular Yahoo services or third party services, you and Yahoo shall be subject to any posted guidelines or rules applicable to such services which may be posted from time to time. All such guidelines or rules, which maybe subject to change, are hereby incorporated by reference into the TOS. In most cases the guides and rules are specific to a particular part of the Service and will assist you in applying the TOS to that part, but to the extent of any inconsistency between the TOS and any guide or rule, the TOS will prevail. We may also offer other services from time to time that are governed by different Terms of Services, in which case the TOS do not apply to such other services if and to the extent expressly excluded by such different Terms of Services. Yahoo also may offer other services from time to time that are governed by different Terms of Services. These TOS do not apply to such other services that are governed by different Terms of Service. </FONT></P><P align=justify><FONT size=2>Welcome to Yahoo! India. Yahoo Web Services India Private Limited Yahoo, we or us as the case may be) provides the Service (defined below) to you, subject to the following Terms of Service (TOS), which may be updated by us from time to time without notice to you. You can review the most current version of the TOS at any time at: </FONT><A href='http://in.docs.yahoo.com/info/terms/'><FONT size=2>http://in.docs.yahoo.com/info/terms/</FONT></A><FONT size=2>. In addition, when using particular Yahoo services or third party services, you and Yahoo shall be subject to any posted guidelines or rules applicable to such services which may be posted from time to time. All such guidelines or rules, which maybe subject to change, are hereby incorporated by reference into the TOS. In most cases the guides and rules are specific to a particular part of the Service and will assist you in applying the TOS to that part, but to the extent of any inconsistency between the TOS and any guide or rule, the TOS will prevail. We may also offer other services from time to time that are governed by different Terms of Services, in which case the TOS do not apply to such other services if and to the extent expressly excluded by such different Terms of Services. Yahoo also may offer other services from time to time that are governed by different Terms of Services. These TOS do not apply to such other services that are governed by different Terms of Service. </FONT></P>"
-                                init={{
-                                height: 500,
-                                menubar: false,
-                                plugins: [
-                                    'advlist autolink lists link image charmap print preview anchor',
-                                    'searchreplace visualblocks code fullscreen',
-                                    'insertdatetime media table paste code help wordcount'
-                                ],
-                                toolbar:
-                                    'undo redo | formatselect | bold italic backcolor | \
-                                    alignleft aligncenter alignright alignjustify | \
-                                    bullist numlist outdent indent | removeformat | help'
-                                }}
-                                onEditorChange={this.handleEditorChange}
-                            />
+                        <div className="col-md-9">
+                        {
+                            (this.state.page_content == "") ? (<div></div>) : (
+
+                                <Editor
+                    
+                                    apiKey="uee7kt25lgaij5leibtwfwfhatuck6yjiclskgplidmyq1oi"
+
+                                    initialValue={this.state.page_content}
+                                    init={{
+                                    height: 500,
+                                    menubar: true,
+                                    plugins: [
+                                        'advlist autolink lists link image charmap print preview anchor',
+                                        'searchreplace visualblocks code fullscreen',
+                                        'insertdatetime media table paste code help wordcount'
+                                    ],
+                                    toolbar:
+                                        'undo redo | formatselect | bold italic backcolor | \
+                                        alignleft aligncenter alignright alignjustify | \
+                                        bullist numlist outdent indent | removeformat | help'
+                                    }}
+                                    onEditorChange={this.handleEditorChange}
+                                />
+
+                            ) 
+                        }
+
+                        </div>
+                    </div>
+
+
+                    <div className="row mt-2">
+                        <div className="col-md-3">
+                        </div>
+
+                        <div className="col-md-4">
+
+                            <button className="btn btn-primary" onClick={this.submitForm}>Update</button>
                         </div>
                     </div>
                 </div>
